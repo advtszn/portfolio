@@ -16,19 +16,20 @@ import redemption from "~/assets/gfx/redemption.webp";
 import wanted from "~/assets/gfx/wanted.webp";
 import zillionaire from "~/assets/gfx/zillionaire.webp";
 import { cn } from "~/lib/utils";
+import { getBlurPlaceholder } from "~/lib/lqip";
 
 const images = [
-  { src: LOVE, alt: "LOVE" },
-  { src: MILLENIUM, alt: "MILLENIUM" },
-  { src: TAKEOVER, alt: "TAKEOVER" },
-  { src: freedom, alt: "freedom" },
-  { src: illicit, alt: "illicit" },
-  { src: insanity, alt: "insanity" },
-  { src: intongues, alt: "intongues" },
-  { src: redemption, alt: "redemption" },
-  { src: kendrick, alt: "kendrick" },
-  { src: wanted, alt: "wanted" },
-  { src: zillionaire, alt: "zillionaire" },
+  { src: LOVE, alt: "LOVE", path: "gfx/LOVE.webp" },
+  { src: MILLENIUM, alt: "MILLENIUM", path: "gfx/MILLENIUM.webp" },
+  { src: TAKEOVER, alt: "TAKEOVER", path: "gfx/TAKEOVER.webp" },
+  { src: freedom, alt: "freedom", path: "gfx/freedom.webp" },
+  { src: illicit, alt: "illicit", path: "gfx/illicit.webp" },
+  { src: insanity, alt: "insanity", path: "gfx/insanity.webp" },
+  { src: intongues, alt: "intongues", path: "gfx/intongues.webp" },
+  { src: redemption, alt: "redemption", path: "gfx/redemption.webp" },
+  { src: kendrick, alt: "kendrick", path: "gfx/kendrick.webp" },
+  { src: wanted, alt: "wanted", path: "gfx/wanted.webp" },
+  { src: zillionaire, alt: "zillionaire", path: "gfx/zillionaire.webp" },
 ];
 
 const {
@@ -69,18 +70,31 @@ const {
               id="masonry"
               class={cn(
                 "gap-x-2 leading-0 ",
-                "[-moz-column-count:3] [-moz-column-gap:8px] [-webkit-column-count:3] [-webkit-column-gap:8px] [column-count:3]"
+                "[-moz-column-count:3] [-moz-column-gap:8px] [-webkit-column-count:3] [-webkit-column-gap:8px] [column-count:3]",
               )}
             >
               {
-                images.map((img) => (
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    class="mb-2 h-auto w-3xs cursor-zoom-in rounded"
-                    data-full={img.src.src}
-                  />
-                ))
+                images.map(async (img) => {
+                  const blurDataURL = await getBlurPlaceholder(img.path);
+
+                  return (
+                    <div class="lqip-container relative mb-2 w-3xs overflow-hidden rounded">
+                      <img
+                        src={blurDataURL}
+                        alt=""
+                        aria-hidden="true"
+                        class="lqip-blur absolute inset-0 h-full w-full scale-110 object-cover blur-lg"
+                      />
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        class="lqip-image relative h-auto w-full cursor-zoom-in"
+                        data-full={img.src.src}
+                        loading="lazy"
+                      />
+                    </div>
+                  );
+                })
               }
             </div>
             <div
