@@ -1,27 +1,26 @@
 ---
 import Container from "~/components/common/container.astro";
+import Link from "~/components/common/link.astro";
 import Layout from "~/layouts/Layout.astro";
-
-export const prerender = false;
-
-const ip = Astro.clientAddress;
 ---
 
 <Layout
   content={{
-    title: "onlyfans | advtszn",
-    description: "subscribe to my onlyfans channel xoxo!",
+    title: "404 | NOT_FOUND",
+    description: "The page you're looking for is missing or moved elsewhere",
   }}
 >
   <main>
     <Container>
       <div class="space-y-2.5 lg:max-w-[50%]">
-        <h1 class="font-serif text-4xl md:text-6xl">ffs get a life</h1>
+        <h1 class="font-serif text-4xl md:text-6xl">NOT_FOUND</h1>
 
         <p
           class="text-muted-foreground font-serif text-2xl leading-[150%] md:text-4xl"
         >
-          there's no onlyfans here. but i respect the curiosity
+          you look lost, i can fix that... you can head over to the <Link
+            href="/">home</Link
+          > page
         </p>
       </div>
     </Container>

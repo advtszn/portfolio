@@ -1,0 +1,24 @@
+---
+import Container from "~/components/common/container.astro";
+import Link from "~/components/common/link.astro";
+import Layout from "~/layouts/Layout.astro";
+---
+
+<Layout
+  content={{
+    title: "500 | INTERNAL_SERVER_ERROR",
+    description: "The page you're looking for is missing or moved elsewhere",
+  }}
+>
+  <main>
+    <Container>
+      <div class="lg:max-w-[50%] space-y-2.5">
+        <h1 class="font-serif text-4xl md:text-6xl">INTERNAL_SERVER_ERROR</h1>
+
+        <p class="font-serif leading-[150%] text-muted-foreground text-2xl md:text-4xl">
+          not quite my tempo... just report this issue to me at <Link href="mailto:hey@advtszn.xyz?subject=INTERNAL_SERVER_ERROR report">@advtszn</Link>
+        </p>
+      </div>
+    </Container>
+  </main>
+</Layout>

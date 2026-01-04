@@ -6,7 +6,7 @@ import { Image } from "astro:assets";
 import { format } from "date-fns";
 import { RichText } from "basehub/react-rich-text";
 import Link from "~/components/common/link.astro";
-import { ChevronLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft } from "lucide-react";
 
 const {
   writings: { items: writings },
@@ -35,7 +35,7 @@ const {
       _sys: { createdAt: true },
       _title: true,
       content: { json: { content: true } },
-      thumbnail: { url: true, width: true, height: true },
+      thumbnail: { url: true, width: true, height: true, alt: true },
     },
   },
 });
@@ -51,15 +51,15 @@ if (!writing) return Astro.rewrite("/404.astro");
 >
   <main>
     <Container>
-      <div class="space-y-6 lg:max-w-[60%] lg:pl-4">
+      <div class="space-y-4 lg:max-w-[60%] lg:pl-4">
         <a href="/writings" class="text-muted-foreground flex items-center pt-2"
-          ><ChevronLeft /> Back to writings</a
+          ><ArrowLeft size={16} className="mr-1.5" /> Go back to writings</a
         >
         <h1 class="font-serif text-4xl italic md:text-6xl">{writing._title}</h1>
         <div class="space-y-4">
           <Image
             src={writing.thumbnail.url}
-            alt={`thumbnail for ${writing._title}`}
+            alt={writing.thumbnail.alt}
             height={writing.thumbnail.height}
             width={writing.thumbnail.width}
             class="h-full w-full object-cover"

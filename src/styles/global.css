@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: 'DM Sans Variable', sans-serif;
-  --font-serif: 'Instrument Serif', serif;
+  --font-sans: "Inter Variable", sans-serif;
+  --font-serif: "Instrument Serif", serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -41,7 +41,6 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-
 }
 
 :root {
@@ -77,21 +76,24 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-
 }
 
 .marquee-container {
   overflow: hidden;
-  mask-image: linear-gradient(to right,
-      transparent,
-      black 10%,
-      black 90%,
-      transparent 100%);
-  -webkit-mask-image: linear-gradient(to right,
-      transparent,
-      black 10%,
-      black 90%,
-      transparent 100%);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
   width: 100%;
   max-width: 100%;
 }
@@ -124,16 +126,20 @@
 @media (max-width: 767px) {
   .marquee-container {
     max-width: 10rem;
-    mask-image: linear-gradient(to right,
-        transparent,
-        black 20%,
-        black 80%,
-        transparent 100%);
-    -webkit-mask-image: linear-gradient(to right,
-        transparent,
-        black 20%,
-        black 80%,
-        transparent 100%);
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 20%,
+      black 80%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 20%,
+      black 80%,
+      transparent 100%
+    );
   }
 }
 
@@ -148,15 +154,15 @@
 }
 
 .richtext h1 {
-  @apply mt-10 text-2xl font-bold md:text-5xl font-serif text-foreground/90;
+  @apply text-foreground/90 mt-10 font-serif text-2xl font-bold md:text-5xl;
 }
 
 .richtext h2 {
-  @apply mt-10 text-2xl font-bold md:text-3xl font-serif text-foreground/90;
+  @apply text-foreground/90 mt-10 font-serif text-2xl font-bold md:text-3xl;
 }
 
 .richtext h3 {
-  @apply mt-10 text-2xl font-bold md:text-xl font-serif text-foreground/90;
+  @apply text-foreground/90 mt-10 font-serif text-2xl font-bold md:text-xl;
 }
 
 .richtext ul {
@@ -172,7 +178,7 @@
 }
 
 .richtext a {
-  @apply bg-muted text-muted-foreground px-1 font-medium;
+  @apply bg-muted text-muted-foreground px-1;
 }
 
 /* Images */
@@ -181,11 +187,11 @@
   max-height: 512px;
   height: auto;
   object-fit: contain;
-  @apply my-12 mx-auto rounded-md;
+  @apply mx-auto my-12 rounded-md;
 }
 
 .richtext p {
-  @apply md:text-lg text-muted-foreground;
+  @apply text-muted-foreground md:text-lg;
 }
 
 @layer base {
@@ -194,6 +200,6 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
 }
