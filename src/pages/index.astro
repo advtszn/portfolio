@@ -10,12 +10,13 @@ import Link from "~/components/common/link.astro";
 import { getImage } from "astro:assets";
 import Tooltip from "~/components/common/tooltip.astro";
 import { cn } from "~/lib/utils";
+import { getBlurPlaceholder } from "~/lib/lqip";
 
 const images = [
-  { src: back2back, alt: "back2back" },
-  { src: perspective, alt: "perspective" },
-  { src: ramen, alt: "ramen" },
-  { src: city, alt: "city" },
+  { src: back2back, alt: "back2back", path: "home/back2back.png" },
+  { src: perspective, alt: "perspective", path: "home/perspective.png" },
+  { src: ramen, alt: "ramen", path: "home/ramen.png" },
+  { src: city, alt: "city", path: "home/city.png" },
 ];
 
 const birthDate = new Date("2007-08-28");
@@ -85,18 +86,28 @@ const age =
           )}
         >
           {
-            images.map(async ({ src, alt }, idx) => {
+            images.map(async ({ src, alt, path }, idx) => {
               const webpImage = await getImage({ src, format: "webp" });
+              const blurDataURL = await getBlurPlaceholder(path);
 
               return (
-                <Image
-                  src={webpImage.src}
-                  alt={alt}
-                  width="800"
-                  height="600"
-                  class="mb-2 h-auto w-3xs cursor-zoom-in rounded grayscale"
-                  data-full={webpImage.src}
-                />
+                <div class="lqip-container relative mb-2 w-3xs overflow-hidden rounded">
+                  <img
+                    src={blurDataURL}
+                    alt=""
+                    aria-hidden="true"
+                    class="lqip-blur absolute inset-0 h-full w-full scale-110 object-cover blur-lg"
+                  />
+                  <Image
+                    src={webpImage.src}
+                    alt={alt}
+                    width="800"
+                    height="600"
+                    class="lqip-image relative h-auto w-full cursor-zoom-in grayscale"
+                    data-full={webpImage.src}
+                    loading="lazy"
+                  />
+                </div>
               );
             })
           }

@@ -194,6 +194,30 @@
   @apply text-muted-foreground md:text-lg;
 }
 
+/* LQIP (Low Quality Image Placeholder) styles */
+.lqip-container {
+  background-color: oklch(0.2 0 0);
+}
+
+.lqip-blur {
+  transition: opacity 0.5s ease-out;
+}
+
+.lqip-image {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.lqip-image.loaded {
+  opacity: 1;
+}
+
+.lqip-image.loaded + .lqip-blur,
+.lqip-container:has(.lqip-image.loaded) .lqip-blur {
+  opacity: 0;
+  pointer-events: none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
