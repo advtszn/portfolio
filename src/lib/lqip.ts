@@ -1,6 +1,5 @@
 import { getPlaiceholder } from "plaiceholder";
-import type { ImageMetadata } from "astro";
-import fs from "node:fs";
+import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -27,7 +26,7 @@ export async function getBlurPlaceholder(assetPath: string): Promise<string> {
     // Resolve the full path from assets directory
     const fullPath = path.resolve(projectRoot, "src/assets", assetPath);
 
-    const buffer = fs.readFileSync(fullPath);
+    const buffer = await fs.readFile(fullPath);
 
     const { base64 } = await getPlaiceholder(buffer, {
       size: 10, // Small size for blur effect
@@ -42,14 +41,4 @@ export async function getBlurPlaceholder(assetPath: string): Promise<string> {
     // Return a transparent pixel as fallback
     return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   }
-}
-
-/**
- * Generates blur placeholders for multiple images.
- * Returns an array of base64 placeholders in the same order as input.
- */
-export async function getBlurPlaceholders(
-  assetPaths: string[],
-): Promise<string[]> {
-  return Promise.all(assetPaths.map((p) => getBlurPlaceholder(p)));
 }
