@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { cn } from "~/lib/utils";
+
+interface Props {
+  src: string;
+  lqip: string;
+  alt: string;
+  width: number;
+  height: number;
+  class?: string;
+  grayscalePlaceholder?: boolean;
+  "data-full"?: string;
+}
+
+const {
+  src,
+  lqip,
+  alt,
+  width,
+  height,
+  class: className,
+  grayscalePlaceholder = false,
+  "data-full": dataFull,
+} = Astro.props;
+---
+
+<div class={cn("blur-image-wrapper relative overflow-hidden", className)} data-full={dataFull}>
+  <img
+    src={lqip}
+    alt=""
+    aria-hidden="true"
+    class={cn(
+      "blur-placeholder absolute inset-0 h-full w-full object-cover",
+      grayscalePlaceholder && "grayscale"
+    )}
+  />
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    class="blur-image relative h-full w-full object-cover opacity-0 transition-opacity duration-500"
+    loading="lazy"
+    decoding="async"
+    onload="this.style.opacity='1';this.previousElementSibling.style.opacity='0';"
+  />
+</div>
+
+<style>
+  .blur-placeholder {
+    transition: opacity 0.5s ease-out;
+  }
+</style>

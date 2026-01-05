@@ -1,0 +1,169 @@
+---
+import Container from "~/components/common/container.astro";
+import Layout from "~/layouts/Layout.astro";
+import { Image } from "astro:assets";
+import BlurImage from "~/components/common/blur-image.astro";
+import { generateLQIPFromPath } from "~/lib/lqip";
+import { cn } from "~/lib/utils";
+import path from "path";
+
+import LOVE from "~/assets/gfx/LOVE.webp";
+import MILLENIUM from "~/assets/gfx/MILLENIUM.webp";
+import TAKEOVER from "~/assets/gfx/TAKEOVER.webp";
+import freedom from "~/assets/gfx/freedom.webp";
+import illicit from "~/assets/gfx/illicit.webp";
+import insanity from "~/assets/gfx/insanity.webp";
+import intongues from "~/assets/gfx/intongues.webp";
+import kendrick from "~/assets/gfx/kendrick.webp";
+import redemption from "~/assets/gfx/redemption.webp";
+import wanted from "~/assets/gfx/wanted.webp";
+import zillionaire from "~/assets/gfx/zillionaire.webp";
+import ericreprid from "~/assets/gfx/ericreprid.webp";
+
+const assetsDir = path.join(process.cwd(), "src/assets/gfx");
+
+const images = await Promise.all([
+  {
+    src: LOVE,
+    alt: "LOVE",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "LOVE.webp")),
+  },
+  {
+    src: MILLENIUM,
+    alt: "MILLENIUM",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "MILLENIUM.webp")),
+  },
+  {
+    src: TAKEOVER,
+    alt: "TAKEOVER",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "TAKEOVER.webp")),
+  },
+  {
+    src: freedom,
+    alt: "freedom",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "freedom.webp")),
+  },
+  {
+    src: illicit,
+    alt: "illicit",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "illicit.webp")),
+  },
+  {
+    src: insanity,
+    alt: "insanity",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "insanity.webp")),
+  },
+  {
+    src: intongues,
+    alt: "intongues",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "intongues.webp")),
+  },
+  {
+    src: ericreprid,
+    alt: "ericreprid",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "ericreprid.webp")),
+  },
+  {
+    src: kendrick,
+    alt: "kendrick",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "kendrick.webp")),
+  },
+  {
+    src: redemption,
+    alt: "redemption",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "redemption.webp")),
+  },
+  {
+    src: wanted,
+    alt: "wanted",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "wanted.webp")),
+  },
+  {
+    src: zillionaire,
+    alt: "zillionaire",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "zillionaire.webp")),
+  },
+]);
+---
+
+<Layout
+  content={{
+    title: "gfx | advtszn",
+    description: "a wall of graphics and artwork from back in the day",
+  }}
+>
+  <main>
+    <Container>
+      <div class="">
+        <div class="mb-8 space-y-2">
+          <h1 class="font-serif text-4xl italic md:text-6xl">graphics</h1>
+          <p class="text-muted-foreground text-lg">
+            artwork and graphics from back when i gave graphic design a shot
+          </p>
+        </div>
+
+        <div
+          id="masonry"
+          class={cn(
+            "gap-x-3 leading-0",
+            "[-moz-column-count:2] [-moz-column-gap:12px] [-webkit-column-count:2] [-webkit-column-gap:12px] [column-count:2]",
+            "md:[-moz-column-count:3] md:[-webkit-column-count:3] md:[column-count:3]",
+            "lg:[-moz-column-count:4] lg:[-webkit-column-count:4] lg:[column-count:4]",
+          )}
+        >
+          {
+            images.map(({ src, alt, lqip }) => (
+              <BlurImage
+                src={src.src}
+                lqip={lqip}
+                alt={alt}
+                width={src.width}
+                height={src.height}
+                class="mb-3 h-auto w-full cursor-zoom-in rounded"
+                data-full={src.src}
+              />
+            ))
+          }
+        </div>
+
+        <div
+          id="previewModal"
+          class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80"
+        >
+          <img
+            id="previewImg"
+            src=""
+            alt="full preview"
+            class="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
+          />
+        </div>
+      </div>
+    </Container>
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const modal = document.getElementById("previewModal");
+    const previewImg = document.getElementById(
+      "previewImg",
+    ) as HTMLImageElement;
+    const images = document.querySelectorAll("#masonry .blur-image-wrapper");
+
+    images.forEach((img) => {
+      img.addEventListener("click", () => {
+        const fullSrc = img.getAttribute("data-full");
+        if (fullSrc && modal && previewImg) {
+          previewImg.src = fullSrc;
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+        }
+      });
+    });
+
+    modal?.addEventListener("click", () => {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    });
+  });
+</script>
