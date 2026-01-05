@@ -32,7 +32,7 @@ const {
     alt=""
     aria-hidden="true"
     class={cn(
-      "blur-placeholder absolute inset-0 h-full w-full object-cover",
+      "blur-placeholder absolute inset-0 z-10 h-full w-full object-cover",
       grayscalePlaceholder && "grayscale"
     )}
   />
@@ -41,7 +41,7 @@ const {
     alt={alt}
     width={width}
     height={height}
-    class="blur-image relative h-full w-full object-cover opacity-0 transition-opacity duration-500"
+    class="blur-image relative block h-auto w-full opacity-0 transition-opacity duration-500"
     loading="lazy"
     decoding="async"
     onload="this.style.opacity='1';this.previousElementSibling.style.opacity='0';"

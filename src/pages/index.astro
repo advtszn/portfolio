@@ -1,22 +1,40 @@
 ---
 import Container from "~/components/common/container.astro";
-import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import city from "~/assets/home/city.png";
 import ramen from "~/assets/home/ramen.png";
 import perspective from "~/assets/home/perspective.png";
 import back2back from "~/assets/home/back2back.png";
-import Link from "~/components/common/link.astro";
 import { getImage } from "astro:assets";
-import Tooltip from "~/components/common/tooltip.astro";
 import { cn } from "~/lib/utils";
+import BlurImage from "~/components/common/blur-image.astro";
+import { generateLQIPFromPath } from "~/lib/lqip";
+import path from "path";
 
-const images = [
-  { src: back2back, alt: "back2back" },
-  { src: perspective, alt: "perspective" },
-  { src: ramen, alt: "ramen" },
-  { src: city, alt: "city" },
-];
+const assetsDir = path.join(process.cwd(), "src/assets/home");
+
+const images = await Promise.all([
+  {
+    src: back2back,
+    alt: "back2back",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "back2back.png"), { grayscale: true }),
+  },
+  {
+    src: perspective,
+    alt: "perspective",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "perspective.png"), { grayscale: true }),
+  },
+  {
+    src: ramen,
+    alt: "ramen",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "ramen.png"), { grayscale: true }),
+  },
+  {
+    src: city,
+    alt: "city",
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "city.png"), { grayscale: true }),
+  },
+]);
 
 const birthDate = new Date("2007-08-28");
 const today = new Date();
@@ -85,16 +103,18 @@ const age =
           )}
         >
           {
-            images.map(async ({ src, alt }, idx) => {
+            images.map(async ({ src, alt, lqip }) => {
               const webpImage = await getImage({ src, format: "webp" });
 
               return (
-                <Image
+                <BlurImage
                   src={webpImage.src}
+                  lqip={lqip}
                   alt={alt}
-                  width="800"
-                  height="600"
-                  class="mb-2 h-auto w-3xs cursor-zoom-in rounded grayscale"
+                  width={src.width}
+                  height={src.height}
+                  class="mb-2 h-auto md:w-3xs cursor-zoom-in rounded grayscale"
+                  grayscalePlaceholder={true}
                   data-full={webpImage.src}
                 />
               );
@@ -117,3 +137,27 @@ const age =
     </Container>
   </main>
 </Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const modal = document.getElementById("previewModal");
+    const previewImg = document.getElementById("previewImg") as HTMLImageElement;
+    const images = document.querySelectorAll("#masonry .blur-image-wrapper");
+
+    images.forEach((img) => {
+      img.addEventListener("click", () => {
+        const fullSrc = img.getAttribute("data-full");
+        if (fullSrc && modal && previewImg) {
+          previewImg.src = fullSrc;
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+        }
+      });
+    });
+
+    modal?.addEventListener("click", () => {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    });
+  });
+</script>
