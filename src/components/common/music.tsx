@@ -6,6 +6,15 @@ interface SpotifyData {
   artist: string;
 }
 
+function SkeletonLoader() {
+  return (
+    <div className="text-muted-foreground flex items-center text-sm font-medium">
+      <MusicIcon className="mr-1 h-4 w-4" />
+      <div className="h-4 w-32 animate-pulse rounded bg-muted" />
+    </div>
+  );
+}
+
 export function MarqueeText(props: { text: string }) {
   const textLength = props.text.length;
   const animationDuration = `${textLength / 2}s`; // Adjust the divisor for desired speed
@@ -60,7 +69,7 @@ export default function Music() {
     return () => clearInterval(interval);
   }, []);
 
-  if (loading) return <MarqueeText text="Fetching music stats..." />;
+  if (loading) return <SkeletonLoader />;
 
   if (error) return <MarqueeText text="Failed to fetch music stats..." />;
 

@@ -11,7 +11,10 @@ import node from "@astrojs/node";
 export default defineConfig({
   site: "https://advtszn.xyz",
   output: "server",
-  prefetch: { prefetchAll: true },
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: "hover",
+  },
   vite: {
     plugins: [tailwindcss()],
   },

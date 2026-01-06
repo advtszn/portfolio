@@ -55,6 +55,11 @@ const {
     <meta name="twitter:creator" content="@advtszn" />
 
     <link rel="canonical" href={Astro.site} />
+
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://api.spotify.com" />
+    <link rel="preconnect" href="https://api.spotify.com" crossorigin />
+
     <ClientRouter />
   </head>
   <body class="h-screen">

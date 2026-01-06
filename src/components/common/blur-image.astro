@@ -12,6 +12,8 @@ interface Props {
   class?: string;
   grayscalePlaceholder?: boolean;
   "data-full"?: string;
+  srcset?: string;
+  sizes?: string;
 }
 
 const {
@@ -23,6 +25,8 @@ const {
   class: className,
   grayscalePlaceholder = false,
   "data-full": dataFull,
+  srcset,
+  sizes,
 } = Astro.props;
 ---
 
@@ -38,6 +42,8 @@ const {
   />
   <img
     src={src}
+    srcset={srcset}
+    sizes={sizes}
     alt={alt}
     width={width}
     height={height}

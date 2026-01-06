@@ -1,6 +1,17 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Ensure fonts don't block rendering */
+@font-face {
+  font-family: "Instrument Serif";
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter Variable";
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

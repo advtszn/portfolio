@@ -1,10 +1,21 @@
 ---
+export const prerender = true;
+
 import Container from "~/components/common/container.astro";
 import Layout from "../layouts/Layout.astro";
-import city from "~/assets/home/city.png";
-import ramen from "~/assets/home/ramen.png";
-import perspective from "~/assets/home/perspective.png";
-import back2back from "~/assets/home/back2back.png";
+import city from "~/assets/home/city.webp";
+import ramen from "~/assets/home/ramen.webp";
+import perspective from "~/assets/home/perspective.webp";
+import back2back from "~/assets/home/back2back.webp";
+// Responsive variants
+import city400 from "~/assets/home/responsive/city-400.webp";
+import city800 from "~/assets/home/responsive/city-800.webp";
+import ramen400 from "~/assets/home/responsive/ramen-400.webp";
+import ramen800 from "~/assets/home/responsive/ramen-800.webp";
+import perspective400 from "~/assets/home/responsive/perspective-400.webp";
+import perspective800 from "~/assets/home/responsive/perspective-800.webp";
+import back2back400 from "~/assets/home/responsive/back2back-400.webp";
+import back2back800 from "~/assets/home/responsive/back2back-800.webp";
 import { getImage } from "astro:assets";
 import { cn } from "~/lib/utils";
 import BlurImage from "~/components/common/blur-image.astro";
@@ -16,23 +27,31 @@ const assetsDir = path.join(process.cwd(), "src/assets/home");
 const images = await Promise.all([
   {
     src: back2back,
+    src400: back2back400,
+    src800: back2back800,
     alt: "back2back",
-    lqip: await generateLQIPFromPath(path.join(assetsDir, "back2back.png"), { grayscale: true }),
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "back2back.webp"), { grayscale: true }),
   },
   {
     src: perspective,
+    src400: perspective400,
+    src800: perspective800,
     alt: "perspective",
-    lqip: await generateLQIPFromPath(path.join(assetsDir, "perspective.png"), { grayscale: true }),
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "perspective.webp"), { grayscale: true }),
   },
   {
     src: ramen,
+    src400: ramen400,
+    src800: ramen800,
     alt: "ramen",
-    lqip: await generateLQIPFromPath(path.join(assetsDir, "ramen.png"), { grayscale: true }),
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "ramen.webp"), { grayscale: true }),
   },
   {
     src: city,
+    src400: city400,
+    src800: city800,
     alt: "city",
-    lqip: await generateLQIPFromPath(path.join(assetsDir, "city.png"), { grayscale: true }),
+    lqip: await generateLQIPFromPath(path.join(assetsDir, "city.webp"), { grayscale: true }),
   },
 ]);
 
@@ -103,12 +122,17 @@ const age =
           )}
         >
           {
-            images.map(async ({ src, alt, lqip }) => {
+            images.map(async ({ src, src400, src800, alt, lqip }) => {
               const webpImage = await getImage({ src, format: "webp" });
+              const webp400 = await getImage({ src: src400, format: "webp" });
+              const webp800 = await getImage({ src: src800, format: "webp" });
+              const srcset = `${webp400.src} 400w, ${webp800.src} 800w, ${webpImage.src} 1200w`;
 
               return (
                 <BlurImage
                   src={webpImage.src}
+                  srcset={srcset}
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   lqip={lqip}
                   alt={alt}
                   width={src.width}
