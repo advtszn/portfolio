@@ -448,12 +448,13 @@ export interface WritingsComponent {
     _sys: BlockDocumentSys
     _title: Scalars['String']
     content: Content
+    description: Scalars['String']
     status: Scalars['BSHBSelect_1230403640']
     thumbnail: BlockImage
     __typename: 'WritingsComponent'
 }
 
-export type WritingsComponentOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'content__ASC' | 'content__DESC' | 'status__ASC' | 'status__DESC' | 'thumbnail__ASC' | 'thumbnail__DESC' | 'untitled__ASC' | 'untitled__DESC'
+export type WritingsComponentOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'content__ASC' | 'content__DESC' | 'description__ASC' | 'description__DESC' | 'status__ASC' | 'status__DESC' | 'thumbnail__ASC' | 'thumbnail__DESC' | 'untitled__ASC' | 'untitled__DESC'
 
 export interface _AgentStart {
     _agentKey: Scalars['String']
@@ -1278,13 +1279,14 @@ export interface WritingsComponentGenqlSelection{
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
     content?: ContentGenqlSelection
+    description?: boolean | number
     status?: boolean | number
     thumbnail?: BlockImageGenqlSelection
     __typename?: boolean | number
     __fragmentOn?: "WritingsComponent"
 }
 
-export interface WritingsComponentFilterInput {AND?: (WritingsComponentFilterInput | null),OR?: (WritingsComponentFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),status?: (SelectFilter | null)}
+export interface WritingsComponentFilterInput {AND?: (WritingsComponentFilterInput | null),OR?: (WritingsComponentFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),description?: (StringFilter | null),status?: (SelectFilter | null)}
 
 export interface WritingsComponentSearchInput {
 /** Searchable fields for query */

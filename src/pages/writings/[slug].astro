@@ -36,6 +36,7 @@ const {
       _title: true,
       content: { json: { content: true } },
       thumbnail: { url: true, width: true, height: true, alt: true },
+      description: true,
     },
   },
 });
@@ -45,8 +46,8 @@ if (!writing) return Astro.rewrite("/404.astro");
 
 <Layout
   content={{
-    title: `${writing._title}`,
-    description: `raw dump/thesis on "${writing._title}"`,
+    title: `${writing._title} | advtszn`,
+    description: writing.description,
   }}
 >
   <main>
