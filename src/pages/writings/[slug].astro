@@ -3,8 +3,12 @@ import Container from "~/components/common/container.astro";
 import Layout from "~/layouts/Layout.astro";
 import { basehub } from "~/lib/basehub";
 import { Image } from "astro:assets";
-import { format } from "date-fns";
 import { RichText } from "basehub/react-rich-text";
+
+const formatDate = (date: string) => {
+  const d = new Date(date);
+  return d.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" });
+};
 import Link from "~/components/common/link.astro";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
 
@@ -71,7 +75,7 @@ if (!writing) return Astro.rewrite("/404.astro");
               class="text-muted-foreground items-baseline-end flex justify-between"
             >
               <p class="">
-                {format(writing._sys.createdAt, "dd/MM/yyyy")}
+                {formatDate(writing._sys.createdAt)}
               </p>
               <p class="font-medium">advtszn</p>
             </div>
