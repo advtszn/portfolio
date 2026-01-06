@@ -1,5 +1,3 @@
-> testing claude code slash commands. another test
-
 # Astro with Tailwind
 
 ```sh
