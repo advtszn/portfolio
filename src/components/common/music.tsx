@@ -10,7 +10,7 @@ function SkeletonLoader() {
   return (
     <div className="text-muted-foreground flex items-center text-sm font-medium">
       <MusicIcon className="mr-1 h-4 w-4" />
-      <div className="h-4 w-80 animate-pulse rounded bg-muted" />
+      <div className="h-4 w-40 md:w-80 animate-pulse rounded bg-muted" />
     </div>
   );
 }
