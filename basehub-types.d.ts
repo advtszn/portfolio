@@ -72,6 +72,7 @@ export interface Archive {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
+    crafts: Crafts
     links: Links
     __typename: 'Archive'
 }
@@ -113,7 +114,7 @@ export interface BlockColor {
     __typename: 'BlockColor'
 }
 
-export type BlockDocument = (Archive | Links | LinksComponent | Works | WorksComponent | Writings | WritingsComponent | _AgentStart | linksComponent_AsList | worksComponent_AsList | writingsComponent_AsList) & { __isUnion?: true }
+export type BlockDocument = (Archive | Crafts | CraftsItem | Links | LinksComponent | Works | WorksComponent | Writings | WritingsComponent | _AgentStart | craftsItem_AsList | linksComponent_AsList | worksComponent_AsList | writingsComponent_AsList) & { __isUnion?: true }
 
 export interface BlockDocumentSys {
     apiNamePath: Scalars['String']
@@ -172,7 +173,7 @@ export interface BlockImage {
     __typename: 'BlockImage'
 }
 
-export type BlockList = (Links | Works | Writings | linksComponent_AsList | worksComponent_AsList | writingsComponent_AsList) & { __isUnion?: true }
+export type BlockList = (Crafts | Links | Works | Writings | craftsItem_AsList | linksComponent_AsList | worksComponent_AsList | writingsComponent_AsList) & { __isUnion?: true }
 
 export interface BlockOgImage {
     height: Scalars['Int']
@@ -213,6 +214,41 @@ export interface ContentRichText {
     toc: Scalars['BSHBRichTextTOCSchema']
     __typename: 'ContentRichText'
 }
+
+export interface Crafts {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _meta: ListMeta
+    /** The key used to search from the frontend. */
+    _searchKey: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item: (CraftsItem | null)
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items: CraftsItem[]
+    __typename: 'Crafts'
+}
+
+export interface CraftsItem {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    /** Array of search highlight information with field names and HTML markup */
+    _highlight: (SearchHighlight[] | null)
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    __typename: 'CraftsItem'
+}
+
+export type CraftsItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC'
 
 export interface Description {
     html: Scalars['String']
@@ -556,10 +592,30 @@ export interface _agents {
 }
 
 export interface _components {
+    craftsItem: craftsItem_AsList
     links: linksComponent_AsList
     works: worksComponent_AsList
     writings: writingsComponent_AsList
     __typename: '_components'
+}
+
+export interface craftsItem_AsList {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _meta: ListMeta
+    /** The key used to search from the frontend. */
+    _searchKey: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item: (CraftsItem | null)
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items: CraftsItem[]
+    __typename: 'craftsItem_AsList'
 }
 
 export interface linksComponent_AsList {
@@ -634,6 +690,17 @@ export interface ArchiveGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
+    crafts?: (CraftsGenqlSelection & { __args?: {
+    /** Filter by a field. */
+    filter?: (CraftsItemFilterInput | null), 
+    /** Limit the number of items returned. Defaults to 500. */
+    first?: (Scalars['Int'] | null), 
+    /** Order by a field. */
+    orderBy?: (CraftsItemOrderByEnum | null), 
+    /** Search configuration */
+    search?: (CraftsItemSearchInput | null), 
+    /** Skip the first n items. */
+    skip?: (Scalars['Int'] | null)} })
     links?: (LinksGenqlSelection & { __args?: {
     /** Filter by a field. */
     filter?: (LinksComponentFilterInput | null), 
@@ -708,6 +775,8 @@ export interface BlockDocumentGenqlSelection{
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
     on_Archive?: ArchiveGenqlSelection
+    on_Crafts?: CraftsGenqlSelection
+    on_CraftsItem?: CraftsItemGenqlSelection
     on_Links?: LinksGenqlSelection
     on_LinksComponent?: LinksComponentGenqlSelection
     on_Works?: WorksGenqlSelection
@@ -715,6 +784,7 @@ export interface BlockDocumentGenqlSelection{
     on_Writings?: WritingsGenqlSelection
     on_WritingsComponent?: WritingsComponentGenqlSelection
     on__AgentStart?: _AgentStartGenqlSelection
+    on_craftsItem_AsList?: craftsItem_AsListGenqlSelection
     on_linksComponent_AsList?: linksComponent_AsListGenqlSelection
     on_worksComponent_AsList?: worksComponent_AsListGenqlSelection
     on_writingsComponent_AsList?: writingsComponent_AsListGenqlSelection
@@ -800,9 +870,11 @@ export interface BlockListGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
+    on_Crafts?: CraftsGenqlSelection
     on_Links?: LinksGenqlSelection
     on_Works?: WorksGenqlSelection
     on_Writings?: WritingsGenqlSelection
+    on_craftsItem_AsList?: craftsItem_AsListGenqlSelection
     on_linksComponent_AsList?: linksComponent_AsListGenqlSelection
     on_worksComponent_AsList?: worksComponent_AsListGenqlSelection
     on_writingsComponent_AsList?: writingsComponent_AsListGenqlSelection
@@ -875,6 +947,61 @@ export interface ContentRichTextGenqlSelection{
     __typename?: boolean | number
     __fragmentOn?: "ContentRichText"
 }
+
+export interface CraftsGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _meta?: ListMetaGenqlSelection
+    /** The key used to search from the frontend. */
+    _searchKey?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item?: CraftsItemGenqlSelection
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items?: CraftsItemGenqlSelection
+    __typename?: boolean | number
+    __fragmentOn?: "Crafts"
+}
+
+export interface CraftsItemGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    /** Array of search highlight information with field names and HTML markup */
+    _highlight?: SearchHighlightGenqlSelection
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    __typename?: boolean | number
+    __fragmentOn?: "CraftsItem"
+}
+
+export interface CraftsItemFilterInput {AND?: (CraftsItemFilterInput | null),OR?: (CraftsItemFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null)}
+
+export interface CraftsItemSearchInput {
+/** Searchable fields for query */
+by?: (Scalars['String'][] | null),
+/** Search query */
+q?: (Scalars['String'] | null)}
 
 export interface DateFilter {eq?: (Scalars['DateTime'] | null),isAfter?: (Scalars['DateTime'] | null),isBefore?: (Scalars['DateTime'] | null),isNull?: (Scalars['Boolean'] | null),neq?: (Scalars['DateTime'] | null),onOrAfter?: (Scalars['DateTime'] | null),onOrBefore?: (Scalars['DateTime'] | null)}
 
@@ -1403,6 +1530,17 @@ export interface _agentsGenqlSelection{
 }
 
 export interface _componentsGenqlSelection{
+    craftsItem?: (craftsItem_AsListGenqlSelection & { __args?: {
+    /** Filter by a field. */
+    filter?: (CraftsItemFilterInput | null), 
+    /** Limit the number of items returned. Defaults to 500. */
+    first?: (Scalars['Int'] | null), 
+    /** Order by a field. */
+    orderBy?: (CraftsItemOrderByEnum | null), 
+    /** Search configuration */
+    search?: (CraftsItemSearchInput | null), 
+    /** Skip the first n items. */
+    skip?: (Scalars['Int'] | null)} })
     links?: (linksComponent_AsListGenqlSelection & { __args?: {
     /** Filter by a field. */
     filter?: (LinksComponentFilterInput | null), 
@@ -1438,6 +1576,32 @@ export interface _componentsGenqlSelection{
     skip?: (Scalars['Int'] | null)} })
     __typename?: boolean | number
     __fragmentOn?: "_components"
+}
+
+export interface craftsItem_AsListGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _meta?: ListMetaGenqlSelection
+    /** The key used to search from the frontend. */
+    _searchKey?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item?: CraftsItemGenqlSelection
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items?: CraftsItemGenqlSelection
+    __typename?: boolean | number
+    __fragmentOn?: "craftsItem_AsList"
 }
 
 export interface linksComponent_AsListGenqlSelection{
@@ -1579,6 +1743,14 @@ export interface FragmentsMap {
     root: ContentRichText,
     selection: ContentRichTextGenqlSelection,
 }
+  Crafts: {
+    root: Crafts,
+    selection: CraftsGenqlSelection,
+}
+  CraftsItem: {
+    root: CraftsItem,
+    selection: CraftsItemGenqlSelection,
+}
   Description: {
     root: Description,
     selection: DescriptionGenqlSelection,
@@ -1682,6 +1854,10 @@ export interface FragmentsMap {
   _components: {
     root: _components,
     selection: _componentsGenqlSelection,
+}
+  craftsItem_AsList: {
+    root: craftsItem_AsList,
+    selection: craftsItem_AsListGenqlSelection,
 }
   linksComponent_AsList: {
     root: linksComponent_AsList,
