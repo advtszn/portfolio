@@ -2,6 +2,7 @@
   "name": "advtszn",
   "version": "0.0.1",
   "private": true,
+  "packageManager": "bun@1.3.10",
   "scripts": {
     "dev": "basehub dev & astro dev",
     "build": "basehub && astro build",
